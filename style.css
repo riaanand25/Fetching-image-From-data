@@ -1,0 +1,33 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+    font-weight: 600;
+}
+#wrapper
+{
+    background-color: rgb(17, 7, 57);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+#SelectBox{
+    width: 100px;
+}
+.ContainPokemonData{
+    width: 400px;
+    margin: auto;
+    text-align: center;
+}
+.container 
+{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 40px;
+}
+.PokemonImage{
+    width: 200px;
+}
