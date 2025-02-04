@@ -5,15 +5,19 @@ const PokemonContainer = document.querySelector(".container");
 const SelectBox = document.querySelector("#SelectBox");
 
 async function FetchingPokemon(url) {
-try {
+  try {
     const response = await fetch(url);
     const data = await response.json();
     console.log(data);
-    return data.sprites.other.dream_world.front_default;
-} 
-catch (error) {
-    console.log(error)
-}
+    return {
+      image: data.sprites.other.dream_world.front_default,
+      types: data.types.map(typeinfo => typeinfo.type.name) 
+    };
+    
+  } catch (error) {
+    console.log(error);
+
+  }
 }
 
 async function PokemonDisplay() {
@@ -23,18 +27,29 @@ async function PokemonDisplay() {
 
     const img = document.createElement("img");
     img.classList.add("PokemonImage");
-    img.src = await FetchingPokemon(user.url);
+    const {image,types}= await FetchingPokemon(user.url);
+    img.src = image
 
     const h1 = document.createElement("h1");
     h1.classList.add("PokemonName");
     h1.innerHTML = user.name;
 
-    const option = document.createElement("option");
-    option.classList.add("NameOption");
+
+    const p = document.createElement("p");
+    p.textContent =`${types.join(",")}`;
+
+
+    types.forEach(type => {
+      const option = document.createElement("option");
+      option.value = type;
+      option.innerHTML = type;
+      SelectBox.appendChild(option);
+  });
    
 
-    SelectBox.append(option);
-    div.append(img, h1);
+    
+
+    div.append(img, h1,p);
     PokemonContainer.append(div);
   }
 }
