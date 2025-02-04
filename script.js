@@ -69,14 +69,29 @@ function PokemonDisplaybyType(e) {
   const typeToFind = e.target.value;
   // console.log(typeToFind);
 
-  const copy = allPokemonDetails
-  copy.filter((pokemon) => {
+  const copy = allPokemonDetails;
+  const filteredPokemons = copy.filter((pokemon) => {
     return pokemon.types[0].type.name === typeToFind;
-
-    
-    
-
   });
+
+  PokemonContainer.innerHTML="";
+  filteredPokemons.forEach((pokemon)=>{
+    const div = document.createElement("div");
+    div.classList.add("ContainPokemonData");
+
+
+    const img = document.createElement("img");
+    img.classList.add("PokemonImage");
+    img.src = pokemon.sprites.other.dream_world.front_default;
+
+    const types = pokemon.types.map(typeinfo => typeinfo.type.name)
+
+    const p = document.createElement("p")
+    p.textContent = `${types.join(",")}`;
+    div.append(img,p)
+    PokemonContainer.append(div)
+
+  })
 }
 
 
