@@ -16,7 +16,7 @@
     width: 100px;
 }
 .ContainPokemonData{
-    width: 400px;
+    width: 80%;
     margin: auto;
     text-align: center;
 }
@@ -26,8 +26,11 @@
     align-items: center;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 40px;
 }
 .PokemonImage{
-    width: 250px;
+    width: 25%;
+}
+.PokemonImage img
+{
+    width: 100%;
 }

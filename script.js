@@ -1,5 +1,5 @@
 import { PokemonData } from "./data.js";
-console.log(PokemonData);
+// console.log(PokemonData);
 
 const PokemonContainer = document.querySelector(".container");
 const SelectBox = document.querySelector("#SelectBox");
@@ -35,16 +35,35 @@ async function PokemonDisplay() {
     h1.innerHTML = user.name;
 
 
+
+   const fetchingType = fetch("https://pokeapi.co/api/v2/type/?limit=21")
+    .then(response => response.json())
+    .then((pokemonTypeData) => {
+      pokemonTypeData.results.forEach((type) => {
+        console.log(type.name);
+      });
+    })
+    console.log(fetchingType);
+  
+
+   
+    
+   
+
     const p = document.createElement("p");
     p.textContent =`${types.join(",")}`;
 
 
     types.forEach(type => {
       const option = document.createElement("option");
-      option.value = type;
+      option.value = user.name;
       option.innerHTML = type;
       SelectBox.appendChild(option);
   });
+
+
+
+   
    
 
     
