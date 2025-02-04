@@ -8,12 +8,14 @@ async function FetchingPokemon(url) {
     const response = await fetch(url);
     const data = await response.json();
     allPokemonDetails.push(data)
+    // console.log(data);
+
     return {
       image: data.sprites.other.dream_world.front_default,
       types: data.types.map(typeinfo => typeinfo.type.name),
     };
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 }
 
@@ -34,18 +36,25 @@ async function fetchingTypes() {
   }
 }
 fetchingTypes();
-let allPokemon = [];
 
-async function PokemonDisplay() {
-  for (const user of PokemonData) {
-    const { image, types } = await FetchingPokemon(user.url);
+async function PokemonDisplay(firstTime = false, data = PokemonData) {
+  console.log("data", data);
+
+  PokemonContainer.innerHTML = "";
+  for (const user of data) {
+    let temp;
+
+    if (firstTime) {
+      temp = await FetchingPokemon(user.url);
+    }
 
     const div = document.createElement("div");
     div.classList.add("ContainPokemonData");
 
     const img = document.createElement("img");
     img.classList.add("PokemonImage");
-    img.src = image;
+    if (firstTime) img.src = temp.image;
+    else img.src = user.sprites.other.dream_world.front_default
 
     const h1 = document.createElement("h1");
     h1.classList.add("PokemonName");
@@ -53,46 +62,56 @@ async function PokemonDisplay() {
 
     const typeText = document.createElement("p");
     typeText.classList.add("PokemonType");
-    typeText.innerText = `${types.join(", ")}`;
+    if (firstTime) typeText.innerText = `${temp.types.join(", ")}`;
+    else {
+      const types = user.types.map(typeinfo => typeinfo.type.name);
+      typeText.innerText = `${types.join(", ")}`;
+    }
 
     div.append(img, h1, typeText);
     PokemonContainer.append(div);
 
-    allPokemon.push(div);
   }
 }
-PokemonDisplay();
+PokemonDisplay(true);
 
 SelectBox.addEventListener("change", PokemonDisplaybyType)
 function PokemonDisplaybyType(e) {
   console.log(e.target.value)
   const typeToFind = e.target.value;
   // console.log(typeToFind);
-
-  const copy = allPokemonDetails;
-  const filteredPokemons = copy.filter((pokemon) => {
-    return pokemon.types[0].type.name === typeToFind;
-  });
-
-  PokemonContainer.innerHTML="";
-  filteredPokemons.forEach((pokemon)=>{
-    const div = document.createElement("div");
-    div.classList.add("ContainPokemonData");
-
-
-    const img = document.createElement("img");
-    img.classList.add("PokemonImage");
-    img.src = pokemon.sprites.other.dream_world.front_default;
-
-    const types = pokemon.types.map(typeinfo => typeinfo.type.name)
-
-    const p = document.createElement("p")
-    p.textContent = `${types.join(",")}`;
-    div.append(img,p)
-    PokemonContainer.append(div)
-
-  })
+  if (typeToFind === "All types") {
+    PokemonDisplay(false, allPokemonDetails)
+  }
+  else {
+    const copy = allPokemonDetails;
+    const filteredPokemons = copy.filter((pokemon) => {
+      return pokemon.types[0].type.name === typeToFind;
+    })
+    PokemonDisplay(false, filteredPokemons)
+  }
 }
+
+
+//   PokemonContainer.innerHTML="";
+//   filteredPokemons.forEach((pokemon)=>{
+//     const div = document.createElement("div");
+//     div.classList.add("ContainPokemonData");
+
+
+//     const img = document.createElement("img");
+//     img.classList.add("PokemonImage");
+//     img.src = pokemon.sprites.other.dream_world.front_default;
+
+//     const types = pokemon.types.map(typeinfo => typeinfo.type.name)
+
+//     const p = document.createElement("p")
+//     p.textContent = `${types.join(",")}`;
+//     div.append(img,p)
+//     PokemonContainer.append(div)
+
+//   })
+// }
 
 
 
