@@ -17,8 +17,13 @@
 }
 .ContainPokemonData{
     width: 25%;
-    margin: auto;
     text-align: center;
+}
+.ContainPokemonData h1 {
+    font-size: 1.5rem;
+}
+.ContainPokemonData p {
+    font-size: 1rem;
 }
 .container 
 {
@@ -29,8 +34,11 @@
 }
 .PokemonImage{
     width: 80%;
+    height: 180px;
+
 }
 .PokemonImage img
 {
     width: 100%;
+    height: 100%;
 }

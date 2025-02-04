@@ -24,6 +24,7 @@ async function fetchingTypes() {
       const option = document.createElement("option");
       option.value = type.name;
       option.innerText = type.name;
+      // console.log(option)
       SelectBox.appendChild(option);
     });
   } catch (error) {
@@ -61,8 +62,7 @@ async function PokemonDisplay() {
 
 PokemonDisplay();
 
-SelectBox.addEventListener("click",()=>{
-  if(SelectBox.includes(allPokemon)){
-
+SelectBox.addEventListener("change", PokemonDisplaybyType)
+  function PokemonDisplaybyType (e) {
+    console.log(e.target.vaue)
   }
-})
